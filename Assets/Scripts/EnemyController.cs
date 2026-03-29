@@ -15,23 +15,22 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        movementController.Move(ReadPlayerDirection());
+        movementController.RotateTowardsDirection(ReadPlayerDirection(), 180f);
+
         if (playerTracking.playerInRange)
         {
-            movementController.Move(ReadPlayerDirection());
+            //Shoot in the future
         }
 
-          if (playerTracking.playerInRange)
-        {
-            Vector2 dir = ReadPlayerDirection();
-            Debug.Log($"Direction: {dir} | PlayerPos: {playerTracking.playerPosition} | EnemyPos: {transform.position}");
-            movementController.Move(dir);
-        }
     }
 
     private Vector2 ReadPlayerDirection()
     {
         Vector2 direction = playerTracking.playerPosition - (Vector2)transform.position;
         return direction.normalized;
-        
+
     }
+
 }

@@ -1,15 +1,16 @@
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
 
-    public static GameManager Instance { get; private set;}
+    public static GameManager Instance { get; private set; }
     private int points = 0;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] TextMeshProUGUI pointsText;
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     public void AddPoints(int pointsToAdd)
     {
         points += pointsToAdd;
-        Debug.Log("Points: " + points);
+        pointsText.text = points.ToString();
     }
+
 }
