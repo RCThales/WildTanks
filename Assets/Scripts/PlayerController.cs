@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInputActions inputActions;
 
+    Barrel barrel;
+    private float shootCooldown = 0.2f;
+    private float lastShootTime = 0f;
+
 
     private void OnEnable()
     {
@@ -31,6 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         movementController = GetComponent<MovementController>();
         inputActions = new PlayerInputActions();
+        barrel = GetComponentInChildren<Barrel>();
 
     }
 
@@ -64,7 +69,7 @@ public class PlayerController : MonoBehaviour
     private void HandleRotation()
     {
         Vector2 direction = InputManager.Instance.UsingController ? GetControllerAimDirection() : GetMouseAimDirection();
-        movementController.RotateTowardsDirection(direction);
+        movementController.RotateTowardsDirection(direction, 90);
     }
 
     private Vector2 GetControllerAimDirection()
@@ -83,12 +88,17 @@ public class PlayerController : MonoBehaviour
 
     private void HandleShoot()
     {
-        if (inputActions.Gameplay.Shoot.triggered)
+        if (inputActions.Gameplay.Shoot.IsPressed() && Time.time - lastShootTime >= shootCooldown)
         {
 
-            Debug.Log("Shoot!");
+            lastShootTime = Time.time;
+            Debug.DrawRay(transform.position, -transform.up * 2, Color.red, 0.5f);
+            barrel.Shoot(-transform.up);
+
         }
     }
+
+
 
 
 }

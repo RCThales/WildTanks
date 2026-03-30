@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
     {
 
         movementController.Move(ReadPlayerDirection());
-        movementController.RotateTowardsDirection(ReadPlayerDirection(), 180f);
+        movementController.RotateTowardsDirection(ReadPlayerDirection(), 90f);
 
         if (playerTracking.playerInRange)
         {
