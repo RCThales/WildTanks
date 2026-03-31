@@ -6,8 +6,9 @@ public class PlayerController : MonoBehaviour
     private MovementController movementController;
 
     private PlayerInputActions inputActions;
-
     Barrel barrel;
+
+    Health health;
     private float shootCooldown = 0.2f;
     private float lastShootTime = 0f;
 
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
         movementController = GetComponent<MovementController>();
         inputActions = new PlayerInputActions();
         barrel = GetComponentInChildren<Barrel>();
+        health = GetComponent<Health>();
 
     }
 
@@ -97,8 +99,6 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-
-
 
 
 }
