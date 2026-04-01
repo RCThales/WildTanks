@@ -14,4 +14,13 @@ public class Barrel : MonoBehaviour
         bullet.Initialize(direction);
     }
 
+    public void RotateTowardsDirection(Vector2 direction)
+    {
+        if (direction.magnitude > 0.1f)
+        {
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 90f;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
+    }
+
 }

@@ -3954,7 +3954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2809352324062347282, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.25
+      value: -0.271
       objectReference: {fileID: 0}
     - target: {fileID: 2871942359888331736, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
       propertyPath: maxHealth
@@ -3974,15 +3974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6996466390006665502, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
       propertyPath: speed
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 6996466390006665502, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
-      propertyPath: acceleration
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6996466390006665502, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
-      propertyPath: driftTiltAngle
-      value: 80
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8125709392228874873, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4026,7 +4018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8882974566331114639, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.97
+      value: -0.04
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -19,12 +19,12 @@ public abstract class Bullet : MonoBehaviour
             health?.TakeDamage(damage);
             Destroy(gameObject);
         }
-        /*
+
         else if (collision.CompareTag("Wall"))
         {
             Destroy(gameObject);
         }
-        */
+
     }
 
 

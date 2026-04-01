@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
         inputActions.Gameplay.AimController.performed += OnInputPerformed;
         inputActions.Gameplay.AimMouse.performed += OnInputPerformed;
         inputActions.Gameplay.Shoot.performed += OnInputPerformed;
+        inputActions.Gameplay.Drift.performed += OnInputPerformed;
     }
 
     private void OnDisable()
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
         inputActions.Gameplay.AimController.performed -= OnInputPerformed;
         inputActions.Gameplay.AimMouse.performed -= OnInputPerformed;
         inputActions.Gameplay.Shoot.performed -= OnInputPerformed;
+        inputActions.Gameplay.Drift.performed -= OnInputPerformed;
         inputActions.Disable();
     }
 
@@ -51,17 +53,26 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        HandleMovement();
+
         HandleRotation();
         HandleShoot();
+        HandleDrift();
+    }
+
+    void FixedUpdate()
+    {
+        HandleMovement();
     }
 
     private void HandleMovement()
     {
-        Vector2 moveInput = inputActions.Gameplay.Move.ReadValue<Vector2>();
-        movementController.Move(moveInput);
+        Vector2 input = inputActions.Gameplay.Move.ReadValue<Vector2>();
+        movementController.Move(input);
     }
-
+    private void HandleDrift()
+    {
+        movementController.SetDrift(inputActions.Gameplay.Drift.IsPressed());
+    }
 
     private void OnInputPerformed(InputAction.CallbackContext ctx)
     {
@@ -70,8 +81,11 @@ public class PlayerController : MonoBehaviour
 
     private void HandleRotation()
     {
-        Vector2 direction = InputManager.Instance.UsingController ? GetControllerAimDirection() : GetMouseAimDirection();
-        movementController.RotateTowardsDirection(direction, 90);
+        Vector2 direction = InputManager.Instance.UsingController ?
+            GetControllerAimDirection() : GetMouseAimDirection();
+
+        // Rotate barrel only, not the tank body
+        barrel.RotateTowardsDirection(direction);
     }
 
     private Vector2 GetControllerAimDirection()
@@ -94,8 +108,8 @@ public class PlayerController : MonoBehaviour
         {
 
             lastShootTime = Time.time;
-            Debug.DrawRay(transform.position, -transform.up * 2, Color.red, 0.5f);
-            barrel.Shoot(-transform.up);
+            Debug.DrawRay(transform.position, barrel.transform.up * 2, Color.red, 0.5f);
+            barrel.Shoot(-barrel.transform.up);
 
         }
     }
