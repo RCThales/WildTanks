@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 8898024501275102720, guid: cb5af90b3a2c97549b7d3c8826ce26a3, type: 3}
+  m_Sprite: {fileID: 4134537486204660929, guid: 215a0ea4a5c2d144986fd2953b46d767, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,8 +104,8 @@ GameObject:
   - component: {fileID: 2688081992957697558}
   - component: {fileID: 2416347992346483541}
   - component: {fileID: 1436546494670614953}
-  - component: {fileID: 1980630394376498192}
   - component: {fileID: 9096437524964269612}
+  - component: {fileID: 5813211955606849228}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Enemy
@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afedd237f4fd24b4e878ef5ddb18d1ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  damage: 1
 --- !u!114 &2416347992346483541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,6 +156,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovementController
   speed: 2
+  acceleration: 20
+  gripFactor: 0.5
+  driftFactor: 0.98
+  gripRecoverySpeed: 3
+  driftSpeedMultiplier: 0.7
+  driftBrakeLevel: 2
+  bodyTransform: {fileID: 0}
+  driftTiltAngle: 15
 --- !u!114 &1436546494670614953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,10 +177,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 2
-  healthText: {fileID: 0}
-  healthBarFill: {fileID: 0}
---- !u!58 &1980630394376498192
-CircleCollider2D:
+--- !u!50 &9096437524964269612
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5177694745203469622}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
+--- !u!70 &5813211955606849228
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -204,35 +238,9 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.44140542
---- !u!50 &9096437524964269612
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5177694745203469622}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Offset: {x: 0.015186787, y: -0.02531159}
+  m_Size: {x: 1.2998495, y: 1.5568564}
+  m_Direction: 0
 --- !u!1 &5248537873498150447
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,7 +348,7 @@ Transform:
   m_GameObject: {fileID: 6319163199994837479}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.55, z: 0}
+  m_LocalPosition: {x: 0, y: -0.058, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

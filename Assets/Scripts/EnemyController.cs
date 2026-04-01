@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
     private Transform player;
 
     [SerializeField] private float damage = 1f;
+    [SerializeField] private float stoppingDistance = 1.2f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,8 +23,12 @@ public class EnemyController : MonoBehaviour
     {
         if (player == null) return;
 
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         Vector2 direction = ReadPlayerDirection();
-        movementController.Move(direction);
+
+        if (distanceToPlayer > stoppingDistance)
+            movementController.MoveTowards(direction);
+
         movementController.RotateTowardsDirection(direction, 90f);
 
         if (playerTracking.playerInRange)

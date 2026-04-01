@@ -114,6 +114,13 @@ public class MovementController : MonoBehaviour
         bodyTransform.localRotation = Quaternion.Euler(0f, 0f, currentTilt);
     }
 
+    public void MoveTowards(Vector2 worldDirection)
+    {
+        rb.AddForce(worldDirection * acceleration, ForceMode2D.Force);
+        if (rb.linearVelocity.magnitude > speed)
+            rb.linearVelocity = rb.linearVelocity.normalized * speed;
+    }
+
     public void RotateTowardsDirection(Vector2 direction, float offset = 0)
     {
         if (direction.magnitude > 0.1f)
