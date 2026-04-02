@@ -10,11 +10,13 @@ public class Health : MonoBehaviour
     private float maxHealth = 5f;
 
     private PlayerHealthUI playerHealthUI;
+    private HitInvincibility hitInvincibility;
 
     void Awake()
     {
         currentHealth = maxHealth;
         playerHealthUI = GetComponent<PlayerHealthUI>();
+        hitInvincibility = GetComponent<HitInvincibility>();
 
 #if UNITY_EDITOR
         if (playerHealthUI == null && CompareTag("Player"))
@@ -26,8 +28,11 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (hitInvincibility != null && hitInvincibility.IsInvincible) return;
+
         currentHealth -= damage;
         playerHealthUI?.UpdateUI(currentHealth, maxHealth);
+        hitInvincibility?.TriggerInvincibility();
 
         if (currentHealth <= 0)
         {

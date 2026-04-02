@@ -1044,7 +1044,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 10.89
+  orthographic size: 12
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2723,7 +2723,7 @@ SpriteRenderer:
   m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7932798033344189819, guid: 7b041c87d1f0b9649b19f62f238e8db0, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9339623, g: 0.4008989, b: 0.4008989, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4925,7 +4925,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 34
-    OrthographicSize: 10.89
+    OrthographicSize: 12
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -5009,6 +5009,14 @@ PrefabInstance:
     - target: {fileID: 3804292617135762666, guid: b79b9b0a45a2b7947af86e1b08d177bc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4365676855150344060, guid: b79b9b0a45a2b7947af86e1b08d177bc, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2064809
+      objectReference: {fileID: 0}
+    - target: {fileID: 4365676855150344060, guid: b79b9b0a45a2b7947af86e1b08d177bc, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.036759555
       objectReference: {fileID: 0}
     - target: {fileID: 9096093385466141981, guid: b79b9b0a45a2b7947af86e1b08d177bc, type: 3}
       propertyPath: m_Name
@@ -5170,6 +5178,14 @@ PrefabInstance:
     - target: {fileID: 3804292617135762666, guid: b79b9b0a45a2b7947af86e1b08d177bc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4365676855150344060, guid: b79b9b0a45a2b7947af86e1b08d177bc, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2310861
+      objectReference: {fileID: 0}
+    - target: {fileID: 4365676855150344060, guid: b79b9b0a45a2b7947af86e1b08d177bc, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.024456918
       objectReference: {fileID: 0}
     - target: {fileID: 9096093385466141981, guid: b79b9b0a45a2b7947af86e1b08d177bc, type: 3}
       propertyPath: m_Name
@@ -5495,6 +5511,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4365676855150344060, guid: b79b9b0a45a2b7947af86e1b08d177bc, type: 3}
+      propertyPath: m_Size.x
+      value: 1.2558696
+      objectReference: {fileID: 0}
+    - target: {fileID: 4365676855150344060, guid: b79b9b0a45a2b7947af86e1b08d177bc, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.012065142
+      objectReference: {fileID: 0}
     - target: {fileID: 9096093385466141981, guid: b79b9b0a45a2b7947af86e1b08d177bc, type: 3}
       propertyPath: m_Name
       value: Wall
@@ -5608,6 +5632,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1034685307211623875, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
+      propertyPath: m_labelHash
+      value: 4.9128127e-36
+      objectReference: {fileID: 0}
+    - target: {fileID: 1034685307211623875, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
+      propertyPath: m_CategoryHash
+      value: 1.0429618e-14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1479437244235775026, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
+      propertyPath: m_labelHash
+      value: 4.9128127e-36
+      objectReference: {fileID: 0}
+    - target: {fileID: 1479437244235775026, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
+      propertyPath: m_CategoryHash
+      value: 1.0429618e-14
+      objectReference: {fileID: 0}
     - target: {fileID: 2245020869163691754, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
       propertyPath: m_BodyType
       value: 0
@@ -5646,7 +5686,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6996466390006665502, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
       propertyPath: speed
-      value: 11
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6996466390006665502, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
+      propertyPath: driftFactor
+      value: 0.97
       objectReference: {fileID: 0}
     - target: {fileID: 6996466390006665502, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
       propertyPath: acceleration
@@ -5658,7 +5702,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6996466390006665502, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
       propertyPath: driftBrakeLevel
-      value: 4
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6996466390006665502, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
+      propertyPath: driftSpeedMultiplier
+      value: 0.37
       objectReference: {fileID: 0}
     - target: {fileID: 8125709392228874873, guid: 92f16b7083be3e74baec88cbb2b36f83, type: 3}
       propertyPath: m_LocalPosition.x

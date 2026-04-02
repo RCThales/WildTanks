@@ -51,6 +51,8 @@ public class MovementController : MonoBehaviour
         currentGrip = gripFactor;
     }
 
+    public bool IsDrifting => isDrifting;
+
     public void SetDrift(bool drifting)
     {
         isDrifting = drifting;
