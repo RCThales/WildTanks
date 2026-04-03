@@ -205,8 +205,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlasticBullet
   speed: 25
   lifeTime: 1.7
-  damage: 1
+  minDamage: 2
+  maxDamage: 4
+  critChance: 0.1
   hitVFXPrefab: {fileID: 500345726442012828, guid: 50a810bfd70577b41a2d43ae0241ea2d, type: 3}
+  damageNumberPrefab: {fileID: 9019550605337804111, guid: 35bcbaaa3bba4b34fb8e7792c55f2771, type: 3}
 --- !u!1 &6433156864935305749
 GameObject:
   m_ObjectHideFlags: 0

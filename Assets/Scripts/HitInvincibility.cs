@@ -5,14 +5,13 @@ public class HitInvincibility : MonoBehaviour
 {
     [SerializeField] private float invincibilityDuration = 1f;
     [SerializeField] private int blinkCount = 3;
+    [SerializeField] private string enemyLayerName = "Enemy";
 
-    private Collider2D col;
     private SpriteRenderer[] spriteRenderers;
     public bool IsInvincible { get; private set; }
 
     void Awake()
     {
-        col = GetComponent<Collider2D>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
     }
 
@@ -25,7 +24,10 @@ public class HitInvincibility : MonoBehaviour
     private IEnumerator InvincibilityRoutine()
     {
         IsInvincible = true;
-        col.enabled = false;
+
+        int enemyLayer = LayerMask.NameToLayer(enemyLayerName);
+        if (enemyLayer >= 0)
+            Physics2D.IgnoreLayerCollision(gameObject.layer, enemyLayer, true);
 
         float blinkInterval = invincibilityDuration / (blinkCount * 2);
         for (int i = 0; i < blinkCount * 2; i++)
@@ -38,7 +40,10 @@ public class HitInvincibility : MonoBehaviour
 
         foreach (var sr in spriteRenderers)
             sr.enabled = true;
-        col.enabled = true;
+
+        if (enemyLayer >= 0)
+            Physics2D.IgnoreLayerCollision(gameObject.layer, enemyLayer, false);
+
         IsInvincible = false;
     }
 }

@@ -1,16 +1,13 @@
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    private float currentHealth;
-
-    [SerializeField] private float maxHealth = 5f;
+    [SerializeField] private int maxHealth = 5;
     [SerializeField] private GameObject deathVFXPrefab;
 
     private PlayerHealthUI playerHealthUI;
     private HitInvincibility hitInvincibility;
+    private int currentHealth;
 
     void Awake()
     {
@@ -26,7 +23,7 @@ public class Health : MonoBehaviour
         playerHealthUI?.UpdateUI(currentHealth, maxHealth);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         if (hitInvincibility != null && hitInvincibility.IsInvincible) return;
 
@@ -35,22 +32,37 @@ public class Health : MonoBehaviour
         hitInvincibility?.TriggerInvincibility();
 
         if (currentHealth <= 0)
-        {
             Die();
-        }
     }
 
-    public void Kill() => Die();
+    public void Kill(bool dropLoot = false) => Die(dropLoot);
 
-    private void Die()
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
+        playerHealthUI?.UpdateUI(currentHealth, maxHealth);
+    }
+
+    private void Die(bool dropLoot = true)
     {
         if (deathVFXPrefab != null)
-            Instantiate(deathVFXPrefab, transform.position, Quaternion.identity);
+        {
+            GameObject vfx = Instantiate(deathVFXPrefab, transform.position, Quaternion.identity);
+            Destroy(vfx, 3f);
+        }
 
         if (CompareTag("Player"))
+        {
             gameObject.SetActive(false);
+        }
+        else if (CompareTag("Items"))
+        {
+            GetComponent<UpgradeItem>()?.OnChosen();
+        }
         else
+        {
+            if (dropLoot) GetComponent<LootDropper>()?.Drop(transform.position);
             Destroy(gameObject);
+        }
     }
-
 }

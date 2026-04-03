@@ -37,9 +37,11 @@ public class Barrel : MonoBehaviour
         transform.localScale = new Vector3(restScale.x * (1f + squish), restScale.y * (1f - squish), restScale.z);
     }
 
-    public void Shoot(Vector2 direction)
+    public void Shoot(Vector2 direction, Bullet overridePrefab = null)
     {
-        Bullet bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation * Quaternion.Euler(0, 0, shootRotationOffset));
+        Bullet prefab = overridePrefab != null ? overridePrefab : bulletPrefab;
+        if (prefab == null) return;
+        Bullet bullet = Instantiate(prefab, firePoint.position, firePoint.rotation * Quaternion.Euler(0, 0, shootRotationOffset));
         bullet.Initialize(direction);
         currentRecoil = recoilDistance;
     }

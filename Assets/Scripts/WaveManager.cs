@@ -28,6 +28,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private ShopCameraTransition shopCameraTransition;
     private bool isWaveActive = false;
     private PlayerController playerController;
+    private PlayerUpgradeManager upgradeManager;
     private readonly List<GameObject> activeMarkers = new List<GameObject>();
 
     public int CurrentWave { get; private set; } = 0;
@@ -38,6 +39,7 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         playerController = playerPosition.GetComponent<PlayerController>();
+        upgradeManager = playerPosition.GetComponent<PlayerUpgradeManager>();
         StartNextWave();
     }
 
@@ -63,7 +65,8 @@ public class WaveManager : MonoBehaviour
         {
             if (waveTimer >= timeBetweenWaves)
             {
-                StartNextWave();
+                waveTimer = 0f; // prevent re-triggering during shop fade-out
+                shopManager.ForceClose();
             }
         }
 
@@ -76,8 +79,17 @@ public class WaveManager : MonoBehaviour
         isWaveActive = true;
         waveTimerText.gameObject.SetActive(true);
         waveNumberText.gameObject.SetActive(true);
+        DeactivateUpgradeItems();
         playerController?.SetMovementEnabled(true);
-        shopCameraTransition?.TransitionToGame();
+        playerController?.SetShootingEnabled(true);
+        if (CurrentWave > 1)
+            shopCameraTransition?.TransitionToGame();
+    }
+
+    private void DeactivateUpgradeItems()
+    {
+        foreach (var item in Resources.FindObjectsOfTypeAll<UpgradeItem>())
+            item.gameObject.SetActive(false);
     }
 
     public void StartBreakPhase()
@@ -90,11 +102,23 @@ public class WaveManager : MonoBehaviour
             if (marker != null) Destroy(marker);
         activeMarkers.Clear();
         StartCoroutine(KillAllEnemiesWithDelay(0.01f));
+        foreach (var col in FindObjectsByType<Collectable>(FindObjectsInactive.Exclude))
+            Destroy(col.gameObject);
+        ResetUpgradeItems();
+        if (upgradeManager != null) upgradeManager.ResetShopPicks();
         waveTimerText.gameObject.SetActive(false);
         waveNumberText.gameObject.SetActive(false);
         playerController?.SetMovementEnabled(false);
+        playerController?.SetShootingEnabled(false);
         shopCameraTransition?.TransitionToShop();
         shopManager.OpenShop();
+        StartCoroutine(ReenableShootingAfterTransition());
+    }
+
+    private IEnumerator ReenableShootingAfterTransition()
+    {
+        yield return new WaitForSeconds(1.5f);
+        playerController?.SetShootingEnabled(true);
     }
 
     public void SkipBreak()
@@ -153,6 +177,7 @@ public class WaveManager : MonoBehaviour
             GameObject vfx = Instantiate(spawnVFXPrefab, spawnPosition, Quaternion.identity);
             foreach (var r in vfx.GetComponentsInChildren<ParticleSystemRenderer>())
                 r.sortingOrder = 100;
+            Destroy(vfx, 3f);
         }
         Instantiate(data.enemyPrefab, spawnPosition, Quaternion.identity);
     }
@@ -210,6 +235,12 @@ public class WaveManager : MonoBehaviour
             float breakRemaining = Mathf.Max(0, timeBetweenWaves - waveTimer);
             shopManager.UpdateBreakTimer(breakRemaining);
         }
+    }
+
+    private void ResetUpgradeItems()
+    {
+        foreach (UpgradeItem item in Resources.FindObjectsOfTypeAll<UpgradeItem>())
+            item.ResetForShop();
     }
 
     private void OnDrawGizmos()

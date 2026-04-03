@@ -5,14 +5,16 @@ public class PlayerController : MonoBehaviour
 {
     private MovementController movementController;
     private bool movementEnabled = true;
+    private bool shootingEnabled = true;
 
     private PlayerInputActions inputActions;
-    Barrel barrel;
+    private Barrel barrel;
+    private Health health;
+    private PlayerUpgradeManager upgradeManager;
 
-    Health health;
-    private float shootCooldown = 0.2f;
-    private float lastShootTime = 0f;
-
+    [SerializeField] private float shootCooldown = 0.2f;
+    private float lastShoot1Time = 0f;
+    private float lastShoot2Time = 0f;
 
     private void OnEnable()
     {
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
         inputActions.Gameplay.AimController.performed += OnInputPerformed;
         inputActions.Gameplay.AimMouse.performed += OnInputPerformed;
         inputActions.Gameplay.Shoot.performed += OnInputPerformed;
+        inputActions.Gameplay.Shoot2.performed += OnInputPerformed;
         inputActions.Gameplay.Drift.performed += OnInputPerformed;
     }
 
@@ -30,10 +33,10 @@ public class PlayerController : MonoBehaviour
         inputActions.Gameplay.AimController.performed -= OnInputPerformed;
         inputActions.Gameplay.AimMouse.performed -= OnInputPerformed;
         inputActions.Gameplay.Shoot.performed -= OnInputPerformed;
+        inputActions.Gameplay.Shoot2.performed -= OnInputPerformed;
         inputActions.Gameplay.Drift.performed -= OnInputPerformed;
         inputActions.Disable();
     }
-
 
     void Awake()
     {
@@ -41,20 +44,16 @@ public class PlayerController : MonoBehaviour
         inputActions = new PlayerInputActions();
         barrel = GetComponentInChildren<Barrel>();
         health = GetComponent<Health>();
-
+        upgradeManager = GetComponent<PlayerUpgradeManager>();
     }
 
     void Start()
     {
-        InputManager.Instance.SetUsingController(Gamepad.current != null); // Assume controller by default, will be updated on input
+        InputManager.Instance.SetUsingController(Gamepad.current != null);
     }
 
-
-    // Update is called once per frame
     void Update()
     {
-
-
         HandleRotation();
         HandleShoot();
         HandleDrift();
@@ -70,6 +69,11 @@ public class PlayerController : MonoBehaviour
         movementEnabled = enabled;
         if (!enabled)
             movementController.Stop();
+    }
+
+    public void SetShootingEnabled(bool enabled)
+    {
+        shootingEnabled = enabled;
     }
 
     private void HandleMovement()
@@ -97,8 +101,6 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 direction = InputManager.Instance.UsingController ?
             GetControllerAimDirection() : GetMouseAimDirection();
-
-        // Rotate barrel only, not the tank body
         barrel.RotateTowardsDirection(direction);
     }
 
@@ -107,7 +109,6 @@ public class PlayerController : MonoBehaviour
         if (Gamepad.current == null) return Vector2.zero;
         return inputActions.Gameplay.AimController.ReadValue<Vector2>();
     }
-
 
     private Vector2 GetMouseAimDirection()
     {
@@ -118,15 +119,20 @@ public class PlayerController : MonoBehaviour
 
     private void HandleShoot()
     {
-        if (inputActions.Gameplay.Shoot.IsPressed() && Time.time - lastShootTime >= shootCooldown)
+        if (!shootingEnabled) return;
+        float cooldown = Mathf.Max(0.05f, shootCooldown + (upgradeManager?.FireRateModifier ?? 0f));
+        Vector2 dir = -barrel.transform.up;
+
+        if (inputActions.Gameplay.Shoot.IsPressed() && Time.time - lastShoot1Time >= cooldown)
         {
+            lastShoot1Time = Time.time;
+            barrel.Shoot(dir, upgradeManager?.Slot1Bullet);
+        }
 
-            lastShootTime = Time.time;
-            Debug.DrawRay(transform.position, barrel.transform.up * 2, Color.red, 0.5f);
-            barrel.Shoot(-barrel.transform.up);
-
+        if (inputActions.Gameplay.Shoot2.IsPressed() && Time.time - lastShoot2Time >= cooldown)
+        {
+            lastShoot2Time = Time.time;
+            barrel.Shoot(dir, upgradeManager?.Slot2Bullet);
         }
     }
-
-
 }

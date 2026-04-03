@@ -49,7 +49,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 0.9456895, b: 0, a: 1}
-  m_Intensity: 1
+  m_Intensity: 6.94
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 0000000017b56020
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 1
+  m_PointLightOuterRadius: 2.02
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -112,8 +112,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.04, y: 0.04, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.33333334, z: 8.333334}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1951366951875769652}
   m_Father: {fileID: 7056564853229068142}
@@ -163,12 +163,12 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 543208727
+  m_SortingLayer: 1
+  m_SortingOrder: -1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 63d99f5e2952d824599a5bee67f51c9e, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 1734825714617252727, guid: 8efd14b1c991d2b45969e102133a0d7d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7607843}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 7056564853229068142}
   - component: {fileID: 4041936965107055369}
   - component: {fileID: 4573553111304879164}
+  - component: {fileID: 6917442258708688955}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -240,6 +241,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   value: 10
+  attractRadius: 3
+  attractSpeed: 8
+  collectVFXPrefab: {fileID: 3022102558446658867, guid: cd3d579a2d65b3241a1812f639db37ec, type: 3}
 --- !u!70 &4573553111304879164
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -274,6 +278,28 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.48, y: 0.48}
+  m_Offset: {x: 0.0008122921, y: 0.044042587}
+  m_Size: {x: 1.2953372, y: 1.357553}
   m_Direction: 0
+--- !u!95 &6917442258708688955
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7422946772206078921}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 47d316a8ff75e0840bc598bd939b90d9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

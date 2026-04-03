@@ -136,6 +136,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot2"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9f43a5d-e377-4242-8ddf-e75bdc99fc46"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -270,6 +279,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Drift"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ab60948-c418-4a1f-95e4-d341458b68c6"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0c4a6521-6cc2-4ec7-8c8d-6a0adcd725ce"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -283,6 +314,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay_Shoot = m_Gameplay.FindAction("Shoot", throwIfNotFound: true);
         m_Gameplay_AimController = m_Gameplay.FindAction("AimController", throwIfNotFound: true);
         m_Gameplay_Drift = m_Gameplay.FindAction("Drift", throwIfNotFound: true);
+        m_Gameplay_Shoot2 = m_Gameplay.FindAction("Shoot2", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -368,6 +400,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Shoot;
     private readonly InputAction m_Gameplay_AimController;
     private readonly InputAction m_Gameplay_Drift;
+    private readonly InputAction m_Gameplay_Shoot2;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -399,6 +432,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/Drift".
         /// </summary>
         public InputAction @Drift => m_Wrapper.m_Gameplay_Drift;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Shoot2".
+        /// </summary>
+        public InputAction @Shoot2 => m_Wrapper.m_Gameplay_Shoot2;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -440,6 +477,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Drift.started += instance.OnDrift;
             @Drift.performed += instance.OnDrift;
             @Drift.canceled += instance.OnDrift;
+            @Shoot2.started += instance.OnShoot2;
+            @Shoot2.performed += instance.OnShoot2;
+            @Shoot2.canceled += instance.OnShoot2;
         }
 
         /// <summary>
@@ -466,6 +506,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Drift.started -= instance.OnDrift;
             @Drift.performed -= instance.OnDrift;
             @Drift.canceled -= instance.OnDrift;
+            @Shoot2.started -= instance.OnShoot2;
+            @Shoot2.performed -= instance.OnShoot2;
+            @Shoot2.canceled -= instance.OnShoot2;
         }
 
         /// <summary>
@@ -541,5 +584,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDrift(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Shoot2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShoot2(InputAction.CallbackContext context);
     }
 }

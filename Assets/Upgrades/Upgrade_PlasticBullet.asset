@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90659ad738aa0834aa2b337130d98fb1, type: 3}
+  m_Name: Upgrade_PlasticBullet
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
+  upgradeName: Plastic Bullet
+  icon: {fileID: -2667762882986629066, guid: e2fec64bb31080f45a350d6b5503f5ce, type: 3}
+  price: 50
+  type: 0
+  bulletPrefab: {fileID: 8121785444046077926, guid: 8b4f63135471612448b6ddbb283b31cd, type: 3}
+  statType: 0
+  statValue: 0

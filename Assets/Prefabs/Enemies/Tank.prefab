@@ -4991,6 +4991,7 @@ GameObject:
   - component: {fileID: 1436546494670614953}
   - component: {fileID: 4206597280489237742}
   - component: {fileID: 6410424980382179629}
+  - component: {fileID: 5618084867973577709}
   - component: {fileID: 9096437524964269612}
   - component: {fileID: 5813211955606849228}
   m_Layer: 3
@@ -5013,8 +5014,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1894049016652148075}
   - {fileID: 2732229127989038917}
+  - {fileID: 1894049016652148075}
   - {fileID: 8442374977006295700}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5072,7 +5073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea50e6553f4a1da429cb92a2cf696e4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 2
+  maxHealth: 5
   deathVFXPrefab: {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
 --- !u!114 &4206597280489237742
 MonoBehaviour:
@@ -5100,6 +5101,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 093f836e0c287064f8ce364e50fd1dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimationController
+--- !u!114 &5618084867973577709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5177694745203469622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11c9b11407fccb148b6827408c2ba18b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LootDropper
+  lootTable: {fileID: 11400000, guid: a23d26c4c1c4f894aa4e7b8c334cd278, type: 2}
 --- !u!50 &9096437524964269612
 Rigidbody2D:
   serializedVersion: 5

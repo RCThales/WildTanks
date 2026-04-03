@@ -19,7 +19,18 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         movementController = GetComponent<MovementController>();
-        player = GameObject.FindWithTag("Player").transform;
+        var playerObj = GameObject.FindWithTag("Player");
+        if (playerObj == null)
+        {
+            var pc = FindAnyObjectByType<PlayerController>(FindObjectsInactive.Include);
+            if (pc != null) playerObj = pc.gameObject;
+        }
+        if (playerObj == null)
+        {
+            Debug.LogError($"EnemyController on {name}: no GameObject tagged 'Player' found.");
+            return;
+        }
+        player = playerObj.transform;
         playerRb = player.GetComponentInParent<Rigidbody2D>();
         if (playerRb == null)
             playerRb = player.GetComponentInChildren<Rigidbody2D>();
@@ -89,7 +100,7 @@ public class EnemyController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.collider.CompareTag("Player")) return;
-        Health h = collision.collider.GetComponent<Health>();
-        if (h != null) h.TakeDamage(damage);
+        Health health = collision.collider.GetComponent<Health>();
+        if (health != null) health.TakeDamage((int)damage);
     }
 }

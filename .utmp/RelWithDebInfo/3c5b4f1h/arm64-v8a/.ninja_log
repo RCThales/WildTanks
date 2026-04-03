@@ -1,0 +1,12 @@
+# ninja log v5
+65	734	7969315346100000	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	516e09ad92cca1eb
+735	1370	7969315357500000	H:/Gamedev/TopDownAdventure/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3c5b4f1h/obj/arm64-v8a/libswappywrapper.so	59b5e864ea8187a2
+21	2438	7969315345500000	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	4560dc93e13d6f71
+1	2528	7969315345300000	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	a78c9592cdcb0c01
+28	2535	7969315345600000	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	e950bcab1156d735
+46	2571	7969315345900000	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	fb94b665b7054e59
+7	2641	7969315345300000	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	cf6818d837e36b15
+55	2967	7969315346100000	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	5e498ae46ead49e9
+37	3046	7969315345700000	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	dad2d7aa81c1c98
+14	3262	7969315345400000	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	9b53997849f0862f
+3263	3468	7969315379000000	H:/Gamedev/TopDownAdventure/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3c5b4f1h/obj/arm64-v8a/libgame.so	83a0e7f158044948
