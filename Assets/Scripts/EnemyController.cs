@@ -3,7 +3,6 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private MovementController movementController;
-    private PlayerTracking playerTracking;
     private Transform player;
     private Rigidbody2D playerRb;
 
@@ -15,19 +14,29 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float separationWeight = 1.2f;
     [SerializeField] private LayerMask enemyLayer;
 
+    private float celebrationSteer;
+
     void Start()
     {
         movementController = GetComponent<MovementController>();
-        playerTracking = GetComponentInChildren<PlayerTracking>();
         player = GameObject.FindWithTag("Player").transform;
         playerRb = player.GetComponentInParent<Rigidbody2D>();
         if (playerRb == null)
             playerRb = player.GetComponentInChildren<Rigidbody2D>();
+
+        // Random spin direction per enemy
+        celebrationSteer = Random.value > 0.5f ? 1f : -1f;
     }
 
     void FixedUpdate()
     {
         if (player == null) return;
+
+        if (!player.gameObject.activeInHierarchy)
+        {
+            Celebrate();
+            return;
+        }
 
         Vector2 predicted = (Vector2)player.position + playerRb.linearVelocity * predictionTime;
         Vector2 toTarget = (predicted - (Vector2)transform.position).normalized;
@@ -41,6 +50,12 @@ public class EnemyController : MonoBehaviour
 
         movementController.Move(new Vector2(steer, throttle));
         movementController.RotateTowardsDirection(toTarget, 90f);
+    }
+
+    private void Celebrate()
+    {
+        movementController.SetDrift(true);
+        movementController.Move(new Vector2(celebrationSteer, 1f));
     }
 
     private Vector2 GetOrbitalSeparation()
@@ -73,7 +88,8 @@ public class EnemyController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Player"))
-            collision.collider.GetComponent<Health>().TakeDamage(damage);
+        if (!collision.collider.CompareTag("Player")) return;
+        Health h = collision.collider.GetComponent<Health>();
+        if (h != null) h.TakeDamage(damage);
     }
 }

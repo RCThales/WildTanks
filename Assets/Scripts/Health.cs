@@ -6,8 +6,8 @@ public class Health : MonoBehaviour
 {
     private float currentHealth;
 
-    [SerializeField]
-    private float maxHealth = 5f;
+    [SerializeField] private float maxHealth = 5f;
+    [SerializeField] private GameObject deathVFXPrefab;
 
     private PlayerHealthUI playerHealthUI;
     private HitInvincibility hitInvincibility;
@@ -40,10 +40,17 @@ public class Health : MonoBehaviour
         }
     }
 
+    public void Kill() => Die();
+
     private void Die()
     {
-        // Handle death logic here, such as playing an animation, disabling the object, etc.
-        Destroy(gameObject);
+        if (deathVFXPrefab != null)
+            Instantiate(deathVFXPrefab, transform.position, Quaternion.identity);
+
+        if (CompareTag("Player"))
+            gameObject.SetActive(false);
+        else
+            Destroy(gameObject);
     }
 
 }

@@ -20,18 +20,24 @@ public class WaveManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI waveNumberText;
 
     [SerializeField] private GameObject preSpawnMarkingPrefab;
+    [SerializeField] private GameObject spawnVFXPrefab;
 
     //Time Between waves
     [SerializeField] private float timeBetweenWaves = 10f;
+    [SerializeField] private ShopManager shopManager;
+    [SerializeField] private ShopCameraTransition shopCameraTransition;
     private bool isWaveActive = false;
+    private PlayerController playerController;
+    private readonly List<GameObject> activeMarkers = new List<GameObject>();
 
-    private int currentWave = 0;
+    public int CurrentWave { get; private set; } = 0;
     private float waveTimer = 0f;
     private float spawnTimer = 0f;
 
 
     private void Start()
     {
+        playerController = playerPosition.GetComponent<PlayerController>();
         StartNextWave();
     }
 
@@ -68,17 +74,33 @@ public class WaveManager : MonoBehaviour
         UpdateWaveNumber();
         ResetTimers();
         isWaveActive = true;
-
+        waveTimerText.gameObject.SetActive(true);
+        waveNumberText.gameObject.SetActive(true);
+        playerController?.SetMovementEnabled(true);
+        shopCameraTransition?.TransitionToGame();
     }
 
-    private void StartBreakPhase()
+    public void StartBreakPhase()
     {
         isWaveActive = false;
         waveTimer = 0f;
         waveTimerText.text = $"Break Time!";
         StopAllCoroutines();
+        foreach (GameObject marker in activeMarkers)
+            if (marker != null) Destroy(marker);
+        activeMarkers.Clear();
         StartCoroutine(KillAllEnemiesWithDelay(0.01f));
-        Debug.Log("Break phase started!");
+        waveTimerText.gameObject.SetActive(false);
+        waveNumberText.gameObject.SetActive(false);
+        playerController?.SetMovementEnabled(false);
+        shopCameraTransition?.TransitionToShop();
+        shopManager.OpenShop();
+    }
+
+    public void SkipBreak()
+    {
+        if (!isWaveActive)
+            StartNextWave();
     }
 
     private IEnumerator KillAllEnemiesWithDelay(float delay)
@@ -86,7 +108,8 @@ public class WaveManager : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
         {
-            Destroy(enemy);
+            if (enemy == null) continue;
+            if (enemy.TryGetComponent(out Health h)) h.Kill();
             yield return new WaitForSeconds(delay);
         }
 
@@ -97,9 +120,9 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < enemyPool.Count; i++)
         {
             EnemyUnlockData data = enemyPool[i];
-            if (currentWave >= data.unlockAtWave)
+            if (CurrentWave >= data.unlockAtWave)
             {
-                int amountToSpawn = data.baseAmount + (currentWave - data.unlockAtWave);
+                int amountToSpawn = data.baseAmount + (CurrentWave - data.unlockAtWave);
                 for (int j = 0; j < amountToSpawn; j++)
                 {
                     spawnRadius = Random.Range(minSpawnRadius, maxSpawnRadius);
@@ -117,12 +140,20 @@ public class WaveManager : MonoBehaviour
         spawnPosition = GetSpawnPosition();
         // Show the marker
         GameObject marking = Instantiate(preSpawnMarkingPrefab, spawnPosition, Quaternion.identity);
+        activeMarkers.Add(marking);
 
         // Wait 2 seconds
         yield return new WaitForSeconds(2f);
 
         // Destroy marker and spawn enemy
+        activeMarkers.Remove(marking);
         Destroy(marking);
+        if (spawnVFXPrefab != null)
+        {
+            GameObject vfx = Instantiate(spawnVFXPrefab, spawnPosition, Quaternion.identity);
+            foreach (var r in vfx.GetComponentsInChildren<ParticleSystemRenderer>())
+                r.sortingOrder = 100;
+        }
         Instantiate(data.enemyPrefab, spawnPosition, Quaternion.identity);
     }
     private Vector2 GetSpawnPosition()
@@ -161,8 +192,8 @@ public class WaveManager : MonoBehaviour
 
     private void UpdateWaveNumber()
     {
-        currentWave++;
-        waveNumberText.text = $"Wave {currentWave}";
+        CurrentWave++;
+        waveNumberText.text = $"Wave {CurrentWave}";
     }
 
     private void UpdateWaveTimer()
@@ -177,7 +208,7 @@ public class WaveManager : MonoBehaviour
         else
         {
             float breakRemaining = Mathf.Max(0, timeBetweenWaves - waveTimer);
-            waveTimerText.text = $"Next wave in {(int)breakRemaining}";
+            shopManager.UpdateBreakTimer(breakRemaining);
         }
     }
 

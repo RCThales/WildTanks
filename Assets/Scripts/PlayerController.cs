@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     private MovementController movementController;
+    private bool movementEnabled = true;
 
     private PlayerInputActions inputActions;
     Barrel barrel;
@@ -64,14 +65,27 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
     }
 
+    public void SetMovementEnabled(bool enabled)
+    {
+        movementEnabled = enabled;
+        if (!enabled)
+            movementController.Stop();
+    }
+
     private void HandleMovement()
     {
+        if (!movementEnabled)
+        {
+            movementController.Stop();
+            return;
+        }
         Vector2 input = inputActions.Gameplay.Move.ReadValue<Vector2>();
         movementController.Move(input);
     }
+
     private void HandleDrift()
     {
-        movementController.SetDrift(inputActions.Gameplay.Drift.IsPressed());
+        movementController.SetDrift(movementEnabled && inputActions.Gameplay.Drift.IsPressed());
     }
 
     private void OnInputPerformed(InputAction.CallbackContext ctx)

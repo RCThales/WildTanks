@@ -53,6 +53,11 @@ public class MovementController : MonoBehaviour
 
     public bool IsDrifting => isDrifting;
 
+    public void Stop()
+    {
+        rb.linearVelocity = Vector2.zero;
+    }
+
     public void SetDrift(bool drifting)
     {
         isDrifting = drifting;
